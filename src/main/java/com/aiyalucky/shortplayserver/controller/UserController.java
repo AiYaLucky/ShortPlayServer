@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
  * Created by IntelliJ IDEA.
  */
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/user")
 public class UserController {
     private final UserServiceImpl userService;
     private final Gson gson;
