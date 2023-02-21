@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.aiyalucky.shortplayserver.mapper.UserMapper">
+
+    <resultMap id="userMap" type="com.aiyalucky.shortplayserver.dao.User">
+        <id column="uid" property="uid"/>
+        <result column="username" property="username"/>
+        <result column="account" property="account"/>
+        <result column="password" property="password"/>
+        <result column="email" property="email"/>
+        <result column="birthday" property="birthday"/>
+        <result column="address" property="address"/>
+        <result column="phone" property="phone"/>
+    </resultMap>
+
+    <select id="findByUsername" resultType="com.aiyalucky.shortplayserver.dao.User">
+        SELECT *
+        FROM user
+        WHERE account = #{account}
+    </select>
+
+    <insert id="insert" parameterType="com.aiyalucky.shortplayserver.dao.User">
+        insert into user(uid, username, account, password, birthday, email, address, phone)
+        values (#{uid}, #{username}, #{account}, #{password}, #{birthday},#{email}, #{address}, #{phone})
+    </insert>
+
+
+    <update id="updateUser" parameterType="com.aiyalucky.shortplayserver.dao.User">
+        UPDATE user
+        SET name  = #{name},
+            age   = #{age},
+            email = #{email}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteUser" parameterType="string">
+        DELETE
+        FROM user
+        WHERE uid = #{uid}
+    </delete>
+
+</mapper>
