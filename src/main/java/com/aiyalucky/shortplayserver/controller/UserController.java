@@ -1,6 +1,7 @@
 package com.aiyalucky.shortplayserver.controller;
 
 import com.aiyalucky.shortplayserver.dao.User;
+import com.aiyalucky.shortplayserver.https.ServerResponse;
 import com.aiyalucky.shortplayserver.service.UserServiceImpl;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.HashMap;
 
 /**
  * @Author: xu xiao wei
@@ -32,10 +35,19 @@ public class UserController {
     @PostMapping("/login")
     public String login(@RequestBody User user) {
         User loginUser = userService.login(user.getAccount(), user.getPassword());
+        ServerResponse response = new ServerResponse();
+        HashMap<String,Object> map = new HashMap<>();
         if (loginUser == null) {
-            return gson.toJson(ResponseEntity.status(HttpStatus.UNAUTHORIZED.value()).body("登陆失败，请检查账号或者密码是否正确"));
+            response.setCode(HttpStatus.UNAUTHORIZED.value());
+            response.setMessage("登录失败，请检查账号密码是否正确");
+            map.put("","");
+        }else{
+            map.put("user",loginUser);
+            response.setCode(HttpStatus.OK.value());
+            response.setMessage("登录成功");
+            response.setData(map);
         }
-        return gson.toJson(ResponseEntity.status(HttpStatus.OK.value()).body("登录成功"));
+        return gson.toJson(response);
     }
 
     @PostMapping("/register")

@@ -1,10 +1,14 @@
 package com.aiyalucky.shortplayserver.dao;
 
 /**
+ * 用户
+ *
+ * @author xuxiaowei
  * @Author: xu xiao wei
  * @Date: 2023/2/19 15:32
  * @Version 1.0
  * Created by IntelliJ IDEA.
+ * @date 2023/02/22
  */
 public class User {
     private String uid;
