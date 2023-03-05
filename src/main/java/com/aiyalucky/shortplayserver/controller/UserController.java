@@ -2,7 +2,7 @@ package com.aiyalucky.shortplayserver.controller;
 
 import com.aiyalucky.shortplayserver.dao.User;
 import com.aiyalucky.shortplayserver.https.ServerResponse;
-import com.aiyalucky.shortplayserver.service.UserServiceImpl;
+import com.aiyalucky.shortplayserver.service.impl.UserServiceImpl;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,11 +15,15 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.HashMap;
 
 /**
- * @Author: xu xiao wei
- * @Date: 2023/2/19 15:34
+ * 用户控制器
+ *
+ * @Author xu xiao wei
+ * @ClassName UserController
+ * @Package com.aiyalucky.shortplayserver.controller
+ * @Date 2023/3/2 22:39
  * @Version 1.0
- * Created by IntelliJ IDEA.
  */
+
 @RestController
 @RequestMapping("/user")
 public class UserController {

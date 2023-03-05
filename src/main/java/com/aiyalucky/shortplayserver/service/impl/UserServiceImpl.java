@@ -1,16 +1,18 @@
-package com.aiyalucky.shortplayserver.service;
+package com.aiyalucky.shortplayserver.service.impl;
 
 import com.aiyalucky.shortplayserver.dao.User;
 import com.aiyalucky.shortplayserver.mapper.UserMapper;
-import com.aiyalucky.shortplayserver.service.impl.UserService;
+import com.aiyalucky.shortplayserver.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
- * @Author: xu xiao wei
- * @Date: 2023/2/19 15:32
+ * @Author xu xiao wei
+ * @ClassName UserServiceImpl
+ * @Package com.aiyalucky.shortplayserver.service.impl
+ * @Date 2023/3/2 22:33
  * @Version 1.0
- * Created by IntelliJ IDEA.
  */
 @Service
 public class UserServiceImpl implements UserService {
@@ -21,6 +23,8 @@ public class UserServiceImpl implements UserService {
         this.userMapper = userMapper;
     }
 
+    @Override
+    @Transactional
     public User login(String account, String password) {
         User user = userMapper.findByUsername(account);
         if (user != null && password.equals(user.getPassword())) {
@@ -28,7 +32,8 @@ public class UserServiceImpl implements UserService {
         }
         return null;
     }
-
+    @Override
+    @Transactional
     public int register(User user) {
         return userMapper.insert(user);
     }

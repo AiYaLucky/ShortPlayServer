@@ -1,4 +1,4 @@
-package com.aiyalucky.shortplayserver.service.impl;
+package com.aiyalucky.shortplayserver.service;
 
 
 import com.aiyalucky.shortplayserver.dao.User;

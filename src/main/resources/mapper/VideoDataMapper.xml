@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aiyalucky.shortplayserver.mapper.VideoDataMapper">
+
+    <resultMap id="BaseResultMap" type="com.aiyalucky.shortplayserver.dao.VideoData">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="imgurl" column="imgurl" jdbcType="VARCHAR"/>
+            <result property="videourl" column="videourl" jdbcType="VARCHAR"/>
+            <result property="desc" column="desc" jdbcType="VARCHAR"/>
+            <result property="name" column="name" jdbcType="VARCHAR"/>
+            <result property="videoid" column="videoid" jdbcType="INTEGER"/>
+            <result property="epnum" column="epnum" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,imgurl,videourl,
+        desc,name,videoid,
+        epnum
+    </sql>
+    <insert id="insert" parameterType="com.aiyalucky.shortplayserver.dao.User">
+        insert into video_list (imgurl, videourl, `desc`, name, videoid, epnum)
+        values (#{imgurl}, #{videourl}, #{desc}, #{name},#{videoid}, #{epnum});
+    </insert>
+
+    <update id="update" parameterType="com.aiyalucky.shortplayserver.dao.VideoData">
+        update video_list
+        set `imgurl`   = #{imgurl},
+            `videourl` = #{videourl},
+            `desc`     = #{desc},
+            `name`     = #{name},
+            `videoid`  = #{videoId},
+            `epnum`    = #{epnum}
+        where id = #{id};
+    </update>
+
+    <select id="selectAll" resultType="com.aiyalucky.shortplayserver.dao.VideoData">
+        SELECT *
+        FROM video_list;
+    </select>
+</mapper>
