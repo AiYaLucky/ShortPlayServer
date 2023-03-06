@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -26,22 +28,42 @@ public class VideoController {
 
     private final VideoDataServiceImpl itemDataService;
     private static ConcurrentHashMap<Integer, VideoData> VIDEO_DATALIST = null;
+    private static List<VideoData> videoDataList = null;
+
     {
         VIDEO_DATALIST = new ConcurrentHashMap<>();
+        videoDataList = new ArrayList<>();
     }
 
     public VideoController(VideoDataServiceImpl itemDataService) {
         this.itemDataService = itemDataService;
-        List<VideoData> videoDataList = itemDataService.selectAll();
+        videoDataList = this.itemDataService.selectAll();
         for (VideoData videoData : videoDataList) {
             VIDEO_DATALIST.put(videoData.getVideoid(), videoData);
         }
     }
 
+    /**
+     * 获取视频数据
+     *
+     * @param num 获取的条目数量
+     * @return {@link List}<{@link VideoData}>
+     */
     @PostMapping("/getList")
-    public List<VideoData> getList(@RequestBody String parameterValue) {
-        // 根据参数值查询对应的数据
-        List<VideoData> dataList = itemDataService.selectAll();
+    public List<VideoData> getList(@RequestBody Integer num) {
+        List<VideoData> dataList = new ArrayList<>();
+        int number = num > videoDataList.size() ? videoDataList.size() : num;
+        for (int i = 0; i < number; i++) {
+            Random random = new Random();
+            int index = random.nextInt(videoDataList.size());
+            VideoData videoData = videoDataList.get(index);
+            if (dataList.contains(videoData)) {
+                i--;
+                continue;
+            }
+            dataList.add(videoData);
+        }
+
         return dataList;
     }
 
