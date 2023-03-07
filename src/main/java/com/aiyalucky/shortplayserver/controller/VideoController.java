@@ -2,6 +2,7 @@ package com.aiyalucky.shortplayserver.controller;
 
 import com.aiyalucky.shortplayserver.dao.VideoData;
 import com.aiyalucky.shortplayserver.service.impl.VideoDataServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,6 +36,7 @@ public class VideoController {
         videoDataList = new ArrayList<>();
     }
 
+    @Autowired
     public VideoController(VideoDataServiceImpl itemDataService) {
         this.itemDataService = itemDataService;
         videoDataList = this.itemDataService.selectAll();

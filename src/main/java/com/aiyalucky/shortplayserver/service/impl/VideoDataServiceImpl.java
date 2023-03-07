@@ -22,6 +22,7 @@ public class VideoDataServiceImpl implements VideoDataService {
 
     private final VideoDataMapper videoDataMapper;
 
+    @Autowired
     public VideoDataServiceImpl(VideoDataMapper videoDataMapper) {
         this.videoDataMapper = videoDataMapper;
     }
