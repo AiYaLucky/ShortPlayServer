@@ -12,16 +12,17 @@
             <result property="name" column="name" jdbcType="VARCHAR"/>
             <result property="videoid" column="videoid" jdbcType="INTEGER"/>
             <result property="epnum" column="epnum" jdbcType="INTEGER"/>
+            <result property="type" column="type" jdbcType="INTEGER"/>
     </resultMap>
 
     <sql id="Base_Column_List">
         id,imgurl,videourl,
         desc,name,videoid,
-        epnum
+        epnum,type
     </sql>
     <insert id="insert" parameterType="com.aiyalucky.shortplayserver.dao.User">
-        insert into video_list (imgurl, videourl, `desc`, name, videoid, epnum)
-        values (#{imgurl}, #{videourl}, #{desc}, #{name},#{videoid}, #{epnum});
+        insert into video_list (imgurl, videourl, `desc`, name, videoid, epnum, type)
+        values (#{imgurl}, #{videourl}, #{desc}, #{name}, #{videoid}, #{epnum}, #{type});
     </insert>
 
     <update id="update" parameterType="com.aiyalucky.shortplayserver.dao.VideoData">
@@ -31,7 +32,8 @@
             `desc`     = #{desc},
             `name`     = #{name},
             `videoid`  = #{videoId},
-            `epnum`    = #{epnum}
+            `epnum`    = #{epnum},
+            `type`    = #{type}
         where id = #{id};
     </update>
 

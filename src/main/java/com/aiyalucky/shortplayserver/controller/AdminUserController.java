@@ -15,9 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * 用户控制器
+ * 后台管理控制器
  *
  * @Author xu xiao wei
  * @ClassName UserController
@@ -33,22 +35,23 @@ public class AdminUserController {
     private final Gson gson;
 
     @Autowired
-    public AdminUserController(AdminUserServiceImpl userService, Gson gson) {
-        this.adminUserService = userService;
+    public AdminUserController(AdminUserServiceImpl adminUserService, Gson gson) {
+        this.adminUserService = adminUserService;
         this.gson = gson;
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody User user) {
-        AdminUser loginUser = adminUserService.login(user.getAccount(), user.getPassword());
+    public String login(@RequestBody AdminUser adminUser) {
+        AdminUser loginUser = adminUserService.login(adminUser.getUsername(), adminUser.getPassword());
         ServerResponse response = new ServerResponse();
-        HashMap<String,Object> map = new HashMap<>();
+        HashMap<String, Object> map = new HashMap<>(16);
+
         if (loginUser == null) {
             response.setCode(HttpStatus.UNAUTHORIZED.value());
             response.setMessage("登录失败，请检查账号密码是否正确");
-            map.put("","");
-        }else{
-            map.put("user",loginUser);
+            map.put("", "");
+        } else {
+            map.put("user", loginUser);
             response.setCode(HttpStatus.OK.value());
             response.setMessage("登录成功");
             response.setData(map);

@@ -26,17 +26,27 @@
         WHERE username = #{username}
     </select>
 
+    <select id="selectAll" resultType="com.aiyalucky.shortplayserver.dao.AdminUser">
+        select *
+        from admin_user;
+    </select>
+
+    <select id="selectByName" resultType="com.aiyalucky.shortplayserver.dao.AdminUser">
+        select *
+        from admin_user
+        where username = #{username};
+    </select>
+
     <insert id="insert" parameterType="com.aiyalucky.shortplayserver.dao.AdminUser">
-        insert into user(uid, username, password,email, phone,created_time,updated_time)
-        values (#{uid}, #{username}, #{password}, #{email}, #{phone},#{created_time}, #{updated_time})
+        insert into admin_user(username, password, email, phone, created_time, updated_time)
+        values (#{username}, #{password}, #{email}, #{phone}, #{created_time}, #{updated_time})
     </insert>
 
-
     <update id="updateUser" parameterType="com.aiyalucky.shortplayserver.dao.AdminUser">
-        UPDATE user
-        SET email  = #{email},
-            phone   = #{phone},
-        WHERE username = #{username}
+        update admin_user
+        set email = #{email},
+            phone = #{phone}
+            where username = #{username};
     </update>
 
     <delete id="deleteUser" parameterType="string">

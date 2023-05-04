@@ -2,7 +2,8 @@ package com.aiyalucky.shortplayserver.service;
 
 
 import com.aiyalucky.shortplayserver.dao.AdminUser;
-import com.aiyalucky.shortplayserver.dao.User;
+
+import java.util.List;
 
 /**
 * @author 小白上楼梯
@@ -15,4 +16,5 @@ public interface AdminUserService {
 
     int register(AdminUser user);
 
+    List<AdminUser> selectAll();
 }

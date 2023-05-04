@@ -43,6 +43,9 @@ public class ServerResponse {
         this.data = data;
     }
 
+    /**
+     * 服务器响应
+     */
     public ServerResponse() {
     }
 

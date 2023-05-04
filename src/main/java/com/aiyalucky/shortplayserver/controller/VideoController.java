@@ -28,7 +28,14 @@ import java.util.concurrent.ConcurrentHashMap;
 public class VideoController {
 
     private final VideoDataServiceImpl itemDataService;
-    private static ConcurrentHashMap<Integer, VideoData> VIDEO_DATALIST = null;
+    /**
+     * 视频数据,ConcurrentHashMap<视频的videoid,剧集id, 对应剧集的所有数据>
+     */
+    private static ConcurrentHashMap<Integer, List<VideoData>> VIDEO_DATALIST = null;
+
+    /**
+     * 视频数据,List<视频整体数据>
+     */
     private static List<VideoData> videoDataList = null;
 
     {
@@ -36,12 +43,25 @@ public class VideoController {
         videoDataList = new ArrayList<>();
     }
 
+    /**
+     * 视频控制器构造方法，首次启动构造的时候会从数据库加载全部的数据，进行分类整合到 VIDEO_DATALIST
+     *
+     * @param itemDataService 项数据服务
+     */
     @Autowired
     public VideoController(VideoDataServiceImpl itemDataService) {
         this.itemDataService = itemDataService;
         videoDataList = this.itemDataService.selectAll();
         for (VideoData videoData : videoDataList) {
-            VIDEO_DATALIST.put(videoData.getVideoid(), videoData);
+            //根据类别进行整理电视剧
+            int videoId = videoData.getVideoid();
+            if (VIDEO_DATALIST.containsKey(videoId)) {
+                VIDEO_DATALIST.get(videoId).add(videoData);
+            } else {
+                List<VideoData> tmpVideoList = new ArrayList<>();
+                tmpVideoList.add(videoData);
+                VIDEO_DATALIST.put(videoData.getVideoid(), tmpVideoList);
+            }
         }
     }
 
@@ -78,20 +98,35 @@ public class VideoController {
      */
     @PostMapping("/addVideo")
     public String addVideoData(VideoData videoData) {
-
         if (contains(videoData)) {
             return "已经存在类似数据";
         }
         itemDataService.insert(videoData);
-        VIDEO_DATALIST.put(videoData.getVideoid(), videoData);
+        int videoId = videoData.getVideoid();
+        if (VIDEO_DATALIST.containsKey(videoId)) {
+            VIDEO_DATALIST.get(videoId).add(videoData);
+        } else {
+            List<VideoData> tmpVideoList = new ArrayList<>();
+            tmpVideoList.add(videoData);
+            VIDEO_DATALIST.put(videoData.getVideoid(), tmpVideoList);
+        }
         return "添加成功!";
     }
 
+    /**
+     * 遍历查找是否存在相同的视频id了
+     *
+     * @param videoData
+     * @return
+     */
     private boolean contains(VideoData videoData) {
-        VideoData data = VIDEO_DATALIST.get(videoData.getVideoid());
-        if (data != null) {
-            return true;
+        int videoId = videoData.getVideoid();
+        List<VideoData> videoDataList = VIDEO_DATALIST.get(videoData.getVideoid());
+        for (VideoData data : videoDataList) {
+            if (videoId == data.getVideoid()) {
+                return false;
+            }
         }
-        return false;
+        return true;
     }
 }

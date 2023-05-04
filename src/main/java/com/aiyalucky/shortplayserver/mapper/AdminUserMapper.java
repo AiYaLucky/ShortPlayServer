@@ -5,6 +5,8 @@ import com.aiyalucky.shortplayserver.dao.AdminUser;
 import com.aiyalucky.shortplayserver.dao.User;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 /**
  * @author 小白上楼梯
  * @description 针对表【admin_user】的数据库操作Mapper
@@ -19,4 +21,7 @@ public interface AdminUserMapper {
     int insert(User user);
 
     int deleteUser(String uid);
+
+    List<AdminUser> selectAll();
+    AdminUser selectByName(String username);
 }

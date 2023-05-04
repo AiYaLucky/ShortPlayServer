@@ -30,10 +30,14 @@
 
     <update id="updateUser" parameterType="com.aiyalucky.shortplayserver.dao.User">
         UPDATE user
-        SET name  = #{name},
-            age   = #{age},
-            email = #{email}
-        WHERE id = #{id}
+        SET username  = #{name},
+            account   = #{age},
+            password   = #{password},
+            email = #{email},
+            birthday = #{birthday},
+            address = #{address},
+            phone = #{phone}
+        WHERE uid = #{uid}
     </update>
 
     <delete id="deleteUser" parameterType="string">
